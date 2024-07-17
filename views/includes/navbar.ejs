@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+      <a class="navbar-brand" href="/listings">
+          <i class="fa-brands fa-airbnb navbar-airbnb"></i>&nbsp;
+          <span class="airbnb-text"><b>airbnb</b></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+              <a class="nav-link" href="/listings">Explore</a>
+          </div>
+      </div>
+      <div class="navbar-nav">
+          <form class="d-flex" role="search">
+              <input class="form-control me-2 search-input" type="search" placeholder="Search">
+              <button class="btn btn-outline-secondary search-icon" type="submit">
+                  <i class="fas fa-search"></i>
+              </button>
+          </form>
+          <a href="/listings/new" class="nav-link">Add New Listing </a>
+      </div>
+
+      <% if (!locals.currUser) { %>
+        <a class="nav-link" href="/signup"><b>Signup</b></a>
+        <a class="nav-link" href="/login"><b>Login</b></a>
+      <% } else { %>
+        <a class="nav-link" href="/logout"><b>Logout</b></a>
+      <% } %>
+      
+  </div>
+</nav>

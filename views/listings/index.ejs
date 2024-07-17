@@ -1,0 +1,232 @@
+<%layout("/layouts/boilerplate") %>
+<style>
+  #filters{
+   display:flex;
+   flex-wrap: nowrap;
+   align-items: center;
+  }
+  .filter{
+    text-align: center;
+    margin-right:2rem;
+    margin-top:2rem;
+    opacity:0.6;
+  }
+  .filter:hover{
+    opacity: 1;
+    cursor: pointer;
+
+  }
+  #prevBtn, #nextBtn {
+    background-color: transparent;
+    border: none; /* No border */
+    cursor: pointer;
+    outline: none; /* Remove outline */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555; /* Icon color */
+    font-size: 24px; /* Icon size */
+  }
+
+  /* Style for the chevron icons */
+  .fa-circle-chevron-left, .fa-circle-chevron-right {
+    color: #555; /* Icon color */
+    font-size: 24px; /* Icon size */
+  }
+  /* Apply some margin to the left and right buttons */
+  #prevBtn {
+    margin-right: 0.5rem;
+  }
+
+  #nextBtn {
+    margin-left: 0.5rem;
+  }
+
+  .filter p {
+    margin-top: 0.5rem; /* Add some space between icon and text */
+  }
+  .tax-info{
+    display:none;
+  }
+ .tax-toggle{
+  border:1px solid black;
+  border-radius:1rem;
+  height:1rem;
+  padding:1rem;
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+ }
+  
+</style>
+<div id="filters">
+  <button id="prevBtn"><i class="fa-solid fa-circle-chevron-left"></i></button>
+  <div class="filter">
+    <i class="fas fa-solid fa-fire"></i>
+    <p>Trending</p>
+  </div>
+  
+  <div class="filter">
+    <i class="fas fa-door-open"></i>
+    <p>Room</p>
+  </div>
+  <div class="filter">
+    <i class="fa-solid fa-cow"></i>
+    <p>Farms</p>
+  </div>
+  
+  <div class="filter">
+    <i class="fa-brands fa-fort-awesome"></i>
+    <p>Castles</p>
+  </div>
+  <div class="filter">
+    <i class="fa-solid fa-person-swimming"></i>
+    <p>Amazing Pool</p>
+  </div>
+  
+  <div class="filter">
+    <i class="fas fa-umbrella-beach"></i>
+    <p>Beach</p>
+  </div>
+  
+  <div class="filter">
+    <i class="fas fa-water"></i>
+    <p>Lake</p>
+  </div>
+  
+  <div class="filter">
+    <i class="fas fa-warehouse"></i>
+    <p>Barn</p>
+  </div>
+  
+  <div class="filter">
+    <i class="fas fa-mountain"></i>
+    <p>Caves</p>
+  </div>
+  
+  <div class="filter">
+    <i class="fas fa-globe-americas"></i>
+    <p>Islands</p>
+  </div>
+  
+  <div class="filter">
+    <i class="fas fa-campground"></i>
+    <p>Cabins</p>
+  </div>
+  
+  <div class="filter">
+    <i class="fas fa-tree"></i>
+    <p>Treehouse</p>
+  </div>
+  
+  <div class="filter">
+    <i class="fas fa-sun"></i>
+    <p>Tropical</p>
+  </div>
+  
+  <div class="filter">
+    <i class="fas fa-city"></i>
+    <p>Iconic Cities</p>
+  </div>
+  <button id="nextBtn"><i class="fa-solid fa-circle-chevron-right"></i></button>
+  <div class="tax-toggle">
+    <div class="form-check form-switch form-check-reverse">
+      <input 
+      class="form-check-input" 
+      type="checkbox" 
+      id="flexSwitchCheckReverse">
+      <label class="form-check-label" for="flexSwitchCheckReverse">Taxes</label>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  let  currentIndex = 0;
+  let filters = document.querySelectorAll('.filter');
+
+  function displayFilter() {
+    for (let i = 0; i < filters.length; i++) {
+    let filter = filters[i];
+    if (i === currentIndex) {
+      filter.style.opacity = '1';
+    } else {
+      filter.style.opacity = '0.6';
+    }
+  }
+  }
+
+  function nextIcon() {
+    if (currentIndex < filters.length - 1) {
+      currentIndex++;
+      displayFilter();
+    }
+  }
+
+  function previousIcon() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      displayFilter();
+    }
+  }
+  function selectFilter(index) {
+    currentIndex = index;
+    displayFilter();
+  }
+
+  // Assign click event handlers to each filter
+  for (let i = 0; i < filters.length; i++) {
+    filters[i].mouseover() = function() {
+      selectFilter(i);
+    };
+  }
+
+  document.getElementById('prevBtn').onclick = previousIcon;
+  document.getElementById('nextBtn').onclick = nextIcon;
+
+  // Initial display
+  displayFilter();
+</script>
+
+
+
+
+
+    <h3>All Listings</h3>
+    <!-- <form method="Get" action="/listings/new">
+        <button>Create New Listings</button>
+    </form> -->
+   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+    <%for(let list of allListing) {%>
+        <a href="/listings/<%=list.id%>" class="list-link">
+        <div class="card col listing-card">
+            <img src="<%=list.image.url%>" class="card-img-top" style="height:20rem" alt="error">
+            <div class="card-img-overlay">Harsh</div>
+            <div class="card-body">
+              <p class="card-text ">
+                <b><%=list.title%></b><br>
+                &#8377;<%=list.price.toLocaleString("en-In")%>/night
+              </p>
+            <p class="tax-info"><b>Total Price After Tax :</b>  &#8377;<%=(list.price+(list.price*0.18)).toLocaleString("en-In")%>/night</p>
+            </div>
+          </div>
+        
+        <%  } %>
+   </div>
+        
+</a>
+<script>
+  let taxSwitch = document.getElementById('flexSwitchCheckReverse');
+  taxSwitch.addEventListener("click" ,()=>{
+let taxinfo = document.getElementsByClassName("tax-info");
+for(info of taxinfo){
+  if(info.style.display!="inline"){
+    info.style.display="inline";
+  }else{
+    info.style.display="none";
+  }
+}
+  });
+
+</script>
+

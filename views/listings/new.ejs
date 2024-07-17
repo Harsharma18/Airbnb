@@ -1,0 +1,65 @@
+<%layout("/layouts/boilerplate") %>
+
+    <div class="row mt-3">
+      <div class="col-8 offset-2 ">
+         <h3>Create a New Listings </h3>
+   <form method = "post" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+      <div class="mb-3">
+         <label for="title" class="form label">Title</label>
+         <input name="title" placeholder="Enter title" type="text" class="form-control" required />
+         <div class="invalid-feedback"> Please Enter  title</div>
+      </div>
+      <div class="mb-3">
+         <label for="description" class="form label">Description</label>
+         <textarea name="description" placeholder="Enter Description" class="form-control" required></textarea>
+         <div class="invalid-feedback">Please Enter short description</div>
+      </div>
+      <div class="mb-3">
+         <label for="image" class="form label">Upload Listing Image</label>
+         <input name="image"type="file" class="form-control" required>
+         
+         <!-- <input name="listing[image]"type="file" class="form-control" > -->
+      </div>
+      <!-- for putting price and location in one line -->
+      <div class="row">
+         <div class="mb-3 col-md-4" >
+            <label for="price" class="form label">Price</label>
+            <input name="price" placeholder="1200"  class="form-control" required
+            />
+            <div class="invalid-feedback">Please Enter Price</div>
+   
+         </div>
+         <div class="mb-3 col-md-8">
+            <label for="location" class="form label">location</label>
+            <input name="location" placeholder="Bhiwani,Haryana" type="text" class="form-control" required>
+            <div class="invalid-feedback"> Please Enter location</div>
+         </div>
+      </div>
+      <div class="mb-3">
+         <label for="country" class="form label">Country</label>
+         <input name="country" placeholder="India" type="text" class="form-control" required>
+         <div class="invalid-feedback">Please Enter Country name</div>
+      </div>  
+     
+      <button class="btn btn-dark  new-btn mt-3">Add</button>   
+   </form>
+</div>
+</div>
+   <!-- or -->
+   <!-- <form method = "post" action="/listings">
+    <input name="lists[title]" placeholder="Enter title" type="text">
+    <br><br>
+    <textarea name="lists[description]" placeholder="Enter Description"></textarea>
+    <br><br>
+    <input name="lists[image]" placeholder="Enter image url" type="text">
+    <br><br>
+    <input name="lists[price]" placeholder="Enter price" type ="number">
+    <br><br>
+    <input name="lists[location]" placeholder="Enter location" type="text">
+    <br><br>
+    <input name="lists[country]" placeholder="Enter country" type="text">
+    <br><br>
+    <button>Submit</button>
+ </form> -->
+    
+</body>

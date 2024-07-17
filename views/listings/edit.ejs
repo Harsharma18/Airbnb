@@ -1,0 +1,72 @@
+<%layout("/layouts/boilerplate") %>
+
+    <!-- <form method="post" action="/listings/<%=listinged.id%>?_method=PUT">
+        <input name="lists[title]" placeholder="Enter title" type="text" value="<%=listinged.title%>">
+        <br><br>
+        <textarea name="lists[description]" placeholder="Enter Description"> <%=listinged.description%></textarea>
+        <br><br>
+        <input name="lists[image]" placeholder="Enter image url" type="text" value="<%=listinged.image%>">
+        <br><br>
+        <input name="lists[price]" placeholder="Enter price" type ="number" value="<%=listinged.price%>">
+        <br><br>
+        <input name="lists[location]" placeholder="Enter location" type="text" value="<%=listinged.location%>">
+        <br><br>
+        <input name="lists[country]" placeholder="Enter country" type="text" value="<%=listinged.country%>">
+        <br><br>
+        <button>Submit</button>
+    </form> -->
+    <!-- or -->
+    <!-- this code write when dont use destructor (...req.body.lists) -->
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+            <h3>Edit Your Listing</h3>
+       <form method = "post" action="/listings/<%=listinged.id%>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form label">Title</label>
+            <input name="title"  type="text" class="form-control"value="<%=listinged.title%>" required>
+
+            <div class="valid-feedback">Looking good 😀</div>
+         </div>
+         <div class="mb-3">
+            <label for="description" class="form label">Description</label>
+            <textarea name="description"  class="form-control" required><%=listinged.description%></textarea>
+            <div class="invalid-feedback">Please Enter Short Desciption</div>
+         </div>
+         <div class="mb-3">
+            Original Listing Image <br>
+            <img src="<%=originalImageUrl%>" width="300" height="200" />
+        </div>
+        
+         <div class="mb-3" >
+            <label for="image" class="form label">Upload Image</label>
+            <input name="image" type="file" class="form-control" >
+           
+         </div>
+         <!-- for putting price and location in one line -->
+        <div class="row">
+            <div class="mb-3 col-md-4" >
+                <label for="price" class="form label">Price</label>
+                <input name="price" type ="number" class="form-control" required value="<%=listinged.price%>">
+                <div class="invalid-feedback">Please Enter Price</div>
+             </div>
+             <div class="mb-3 col-md-8">
+                <label for="location" class="form label">location</label>
+                <input name="location" type="text" class="form-control"required value="<%=listinged.location%>">
+                <div class="invalid-feedback">Please Enter Location</div>
+             </div>
+        </div>
+            
+      
+         <div class="mb-3">
+            <label for="country" class="form label">Country</label>
+            <input name="country" placeholder="India" type="text"required  class="form-control" value="<%=listinged.country%>">
+            <div class="invalid-feedback">Please Enter Country name</div>
+         </div>
+
+
+        <button class="edit-btn btn-dark mb-3">Add</button>
+       
+     </form> 
+    </div> 
+</div>
+
