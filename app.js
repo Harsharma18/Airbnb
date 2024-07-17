@@ -5,8 +5,8 @@ if (process.env.NODE_ENV != "production") {
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const mongourl = "mongodb://127.0.0.1:27017/Wandurlust";
-// const atlasurl = process.env.ATLASDB_URL;
+//const mongourl = "mongodb://127.0.0.1:27017/Wandurlust";
+ const atlasurl = process.env.ATLASDB_URL;
 
 // Access utils express error path
 const ExpressError = require("./utils/ExpressError.js");
@@ -31,17 +31,17 @@ const User = require("./models/user.js")
 
 // Access express session
 const session = require("express-session");
-// const mongoStore = require("connect-mongo");
-// const store = mongoStore.create({
-//     mongoUrl: atlasurl,
-//     crypto: {
-//         secret: process.env.SECRET,
-//     },
-//     touchAfter: 900,
-// });
-// store.on("error", (err) => {
-//     console.log("error in mongostore", err);
-// });
+const mongoStore = require("connect-mongo");
+const store = mongoStore.create({
+    mongoUrl: atlasurl,
+    crypto: {
+        secret: process.env.SECRET,
+    },
+    touchAfter: 900,
+});
+store.on("error", (err) => {
+    console.log("error in mongostore", err);
+});
 const sessionOption = {
     // store: store,  // Uncomment this if using MongoDB to store sessions
     secret: process.env.SECRET || 'secret',  // Use a fallback secret if .env is not available
@@ -88,7 +88,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 // MongoDB connection
 async function main() {
-    await mongoose.connect(mongourl, {
+    await mongoose.connect(atlasurl, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });

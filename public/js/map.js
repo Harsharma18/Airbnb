@@ -4,7 +4,7 @@ const map = new mapboxgl.Map({
     style: 'mapbox://styles/mapbox/streets-v9',
     projection: 'globe', // Display the map as a globe, since satellite-v9 defaults to Mercator
     zoom: 1,
-    center:listingsh.geometry.coordinates
+    center: listingsh.geometry.coordinates,
 });
 const marker1 = new mapboxgl.Marker({ color: "red" }) 
   .setLngLat(listingsh.geometry.coordinates)            
@@ -177,3 +177,4 @@ map.on("load", () => {
     },
   });
 });
+console.log("local value" ,process.env.NODE_ENV);
