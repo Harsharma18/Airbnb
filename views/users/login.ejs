@@ -1,50 +1,70 @@
 <% layout("/layouts/boilerplate") %>
 
 <style>
-    body {
-        background: #f8f9fa;
-    }
-    .login-container {
-        max-width: 400px;
-        margin: 50px auto;
-        background: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+  body {
+    background: #f8f9fa;
+  }
+  .login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
 </style>
 
 <div class="container">
-    <div class="login-container">
-        <h3 class="text-center">Login</h3>
-        <form method="post" action="/login" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <label for="username" class="form-label">username</label>
-                <input type="username" name="username" class="form-control" id="username" placeholder="Enter email" required>
-            </div>
+  <div class="login-container">
+    <h3 class="text-center">Login</h3>
+    <form method="post" action="/login" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="username" class="form-label">username</label>
+        <input
+          type="username"
+          name="username"
+          class="form-control"
+          id="username"
+          placeholder="Enter email"
+          required
+        />
+      </div>
 
-            
-            <!-- Email Field -->
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
-                <div class="valid-feedback">Valid email!</div>
-                <div class="invalid-feedback">Please enter a valid email address.</div>
-            </div>
+      <!-- Email Field -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          id="email"
+          placeholder="Enter email"
+          required
+        />
+        <div class="valid-feedback">Valid email!</div>
+        <div class="invalid-feedback">Please enter a valid email address.</div>
+      </div>
 
-            <!-- Password Field -->
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" required>
-            </div>
+      <!-- Password Field -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          id="password"
+          placeholder="Enter password"
+          required
+        />
+      </div>
 
-            <!-- Submit Button -->
-            <button class="btn btn-primary w-100" type="submit">Login</button>
+      <!-- Submit Button -->
+      <button class="btn btn-primary w-100" type="submit">Login</button>
 
-            <!-- Forgot Password & Signup Link -->
-            <div class="text-center mt-3">
-                <a href="/signup">Create an account</a>
-            </div>
-        </form>
-    </div>
+      <!-- Forgot Password & Signup Link -->
+      <div class="text-center mt-3">
+        <a href="/signup">Create an account</a>
+      </div>
+    </form>
+  </div>
 </div>

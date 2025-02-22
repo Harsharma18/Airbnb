@@ -9,9 +9,7 @@ const { isLoggedIn, isOwner, schemaValidateListing } = require("../middleware");
 const listingController = require("../controllers/listing");
 
 //index route
-router.route("/")
-.get(wrapAsync(listingController.index))
-.post(
+router.route("/").get(wrapAsync(listingController.index)).post(
   isLoggedIn,
 
   upload.single("listing[image]"),
@@ -23,9 +21,19 @@ router.get("/new", isLoggedIn, listingController.createListing);
 router.get("/search", wrapAsync(listingController.search));
 
 router.get("/filter/:category", wrapAsync(listingController.filter));
-router.get("/:id/remove-category/:category", isLoggedIn, isOwner, wrapAsync(listingController.removeCategory));
+router.get(
+  "/:id/remove-category/:category",
+  isLoggedIn,
+  isOwner,
+  wrapAsync(listingController.removeCategory)
+);
 // Add a new route for removing all categories
-router.get("/:id/remove-all-categories", isLoggedIn, isOwner, wrapAsync(listingController.removeAllCategories));
+router.get(
+  "/:id/remove-all-categories",
+  isLoggedIn,
+  isOwner,
+  wrapAsync(listingController.removeAllCategories)
+);
 
 /// show route,update ,delete route
 router
@@ -39,7 +47,7 @@ router
     wrapAsync(listingController.updateListing)
   )
   .delete(isOwner, wrapAsync(listingController.deleteListing));
- 
+
 //edit route
 router.get(
   "/:id/edit",
@@ -47,7 +55,6 @@ router.get(
   isOwner,
   wrapAsync(listingController.editListing)
 );
-
 
 module.exports = router;
 // app.get("/test",async(req,res)=>{

@@ -4,7 +4,7 @@ module.exports.signupForm = (req, res) => {
   res.render("./users/signup.ejs");
 };
 module.exports.postsignupForm = async (req, res) => {
-  try { 
+  try {
     const { username, email, password } = req.body;
 
     const newUser = new userModel({ username, email });
@@ -43,54 +43,55 @@ module.exports.renderImageChangeForm = async (req, res, next) => {
   let { id } = req.params;
   let user = await userModel.findById(id);
   res.render("./users/changeImage.ejs", { user });
-};module.exports.updateImage = async (req, res, next) => {
+};
+module.exports.updateImage = async (req, res, next) => {
   try {
-      const { id } = req.params;
+    const { id } = req.params;
 
-      if (!req.file) {
-          req.flash('error', 'No file uploaded. Please try again.');
-          return res.redirect('/profile');
-      }
+    if (!req.file) {
+      req.flash("error", "No file uploaded. Please try again.");
+      return res.redirect("/profile");
+    }
 
-      const url = req.file.path;
-      const filename = req.file.filename;
+    const url = req.file.path;
+    const filename = req.file.filename;
 
-      const user = await userModel.findById(id);
-      if (!user) { 
-          req.flash('error', 'User not found');
-          return res.redirect('/profile');
-      }
+    const user = await userModel.findById(id);
+    if (!user) {
+      req.flash("error", "User not found");
+      return res.redirect("/profile");
+    }
 
-      user.image = { url, filename };
-      await user.save();
+    user.image = { url, filename };
+    await user.save();
 
-      req.flash('success', 'Your account image has been successfully updated.');
-      res.redirect('/profile');
+    req.flash("success", "Your account image has been successfully updated.");
+    res.redirect("/profile");
   } catch (e) {
-      next(e);
+    next(e);
   }
 };
 module.exports.deleteImage = async (req, res, next) => {
   try {
-      const { id } = req.params;
+    const { id } = req.params;
 
-      const user = await userModel.findById(id);
-      if (!user) {
-          req.flash("error", "User not found");
-          return res.redirect("/profile");
-      }
+    const user = await userModel.findById(id);
+    if (!user) {
+      req.flash("error", "User not found");
+      return res.redirect("/profile");
+    }
 
-      // Set the default preview image
-      user.image = { 
-        url: "/icons/userpreview.png",  // Default profile image
-        filename: "user-image" // Default filename
-      };
-      
-      await user.save();
+    // Set the default preview image
+    user.image = {
+      url: "/icons/userpreview.png", // Default profile image
+      filename: "user-image", // Default filename
+    };
 
-      req.flash("success", "Profile image deleted. Default image set.");
-      res.redirect("/profile");
+    await user.save();
+
+    req.flash("success", "Profile image deleted. Default image set.");
+    res.redirect("/profile");
   } catch (e) {
-      next(e);
+    next(e);
   }
 };

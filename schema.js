@@ -5,11 +5,11 @@ const listingjoischema = Joi.object({
     title: Joi.string().required(),
     description: Joi.string().required(),
     country: Joi.string().required(),
-    location: Joi.string().required(), 
+    location: Joi.string().required(),
     price: Joi.number().required().min(0),
     category: Joi.allow(""),
     image: Joi.object({
-      url: Joi.string().uri().required(), 
+      url: Joi.string().uri().required(),
     }),
   }).required(),
 });
@@ -22,8 +22,7 @@ module.exports.reviewjoischema = Joi.object({
   }).required(),
 });
 module.exports.userjoischema = Joi.object({
- 
   username: Joi.string().required(),
-email: Joi.string().required().email(),
+  email: Joi.string().required().email(),
   password: Joi.string().min(8),
 });

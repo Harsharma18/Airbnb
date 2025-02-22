@@ -1,20 +1,21 @@
 <% layout("/layouts/boilerplate") %>
 <div class="container">
   <i class="fa-solid fa-circle-exclamation"></i>
-  
 
-  <div class="alert alert-danger  shadow-lg" role="alert">
+  <div class="alert alert-danger shadow-lg" role="alert">
     <h2 class="">Oops! Something went wrong.</h2>
-    <p >
-      <b>Error Message:</b> <%= err.message || "An unexpected error occurred." %>
+    <p>
+      <b>Error Message:</b> <%= err.message || "An unexpected error occurred."
+      %>
     </p>
     <p>
-      <b>Suggestion:</b> Please review your input or try again later. If the issue persists, contact support.
+      <b>Suggestion:</b> Please review your input or try again later. If the
+      issue persists, contact support.
     </p>
   </div>
 </div>
-<form action="/listings" >
-    <button class="btn btn-outline-success shadow-sm">
-      <i class="fa-solid fa-circle-arrow-left"></i>&nbsp;Home
-    </button>
-  </form>
+<form action="/listings">
+  <button class="btn btn-outline-success shadow-sm">
+    <i class="fa-solid fa-circle-arrow-left"></i>&nbsp;Home
+  </button>
+</form>

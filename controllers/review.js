@@ -7,14 +7,15 @@ module.exports.postReview = async (req, res) => {
   const { id } = req.params;
   const { review } = req.body;
   let listing = await ListingModel.findById(id);
-  let newReview = new ReviewModel({  rating: review.rating,
+  let newReview = new ReviewModel({
+    rating: review.rating,
     comment: review.comment,
-    author: req.user._id,  
-    listingmodelid: listing._id    
-    });
+    author: req.user._id,
+    listingmodelid: listing._id,
+  });
 
   newReview.author = req.user._id;
-   newReview.listingmodelid = listing._id;
+  newReview.listingmodelid = listing._id;
   console.log("Received Review Data: ", review);
   console.log("New Review Object Before Save: ", newReview);
   await newReview.save();
@@ -22,9 +23,9 @@ module.exports.postReview = async (req, res) => {
 
   await listing.save();
 
-        console.log("Review saved successfully: ", newReview);
-        console.log("Updated Listing with Reviews: ", listing);
-        req.flash("success", "Review added successfully!");
+  console.log("Review saved successfully: ", newReview);
+  console.log("Updated Listing with Reviews: ", listing);
+  req.flash("success", "Review added successfully!");
   res.redirect(`/listings/${listing._id}`);
 };
 module.exports.deleteReview = async (req, res) => {

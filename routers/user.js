@@ -39,7 +39,12 @@ router
     upload.single("image"),
     wrapAsync(userController.updateImage)
   ); //update image------------
-  // In your routes file
-router.delete('/delete-image/:id', isLoggedIn, isAccountOwner, wrapAsync(userController.deleteImage));
+// In your routes file
+router.delete(
+  "/delete-image/:id",
+  isLoggedIn,
+  isAccountOwner,
+  wrapAsync(userController.deleteImage)
+);
 
 module.exports = router;

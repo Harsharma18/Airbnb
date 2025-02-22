@@ -1,11 +1,9 @@
-
 const ListingModel = require("../models/listing");
 const ReviewModel = require("../models/review");
 const userModel = require("../models/user");
 // Display user profile with all listings and reviews
 module.exports.profile = async (req, res) => {
   try {
-    
     const allListings = await ListingModel.find({
       owner: req.user._id,
     }).populate("owner");
@@ -83,7 +81,7 @@ module.exports.allReviewDestroy = async (req, res, next) => {
       req.flash("error", "No reviews found to delete!");
       return res.redirect("/profile");
     }
- 
+
     // Remove the reviews from associated listings
     for (const review of allReviews) {
       await ListingModel.findByIdAndUpdate(review.listingmodelid, {

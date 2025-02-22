@@ -12,7 +12,7 @@ const {
   isreviewAuthor,
   isReviewAll,
   isOwnerAll,
-  isAccountOwner,  
+  isAccountOwner,
 } = require("../middleware");
 
 router.get("/", isLoggedIn, wrapAsync(profileController.profile));

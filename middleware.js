@@ -2,7 +2,11 @@ const ListingModel = require("./models/listing");
 const userModel = require("./models/user");
 const ReviewModel = require("./models/review");
 const ExpressError = require("./utils/ExpressError");
-const { reviewjoischema, listingjoischema,userjoischema } = require("./schema");
+const {
+  reviewjoischema,
+  listingjoischema,
+  userjoischema,
+} = require("./schema");
 module.exports.isLoggedIn = (req, res, next) => {
   console.log(req.path, "....", req.originalUrl);
   if (!req.isAuthenticated()) {
@@ -10,7 +14,7 @@ module.exports.isLoggedIn = (req, res, next) => {
     req.flash("error", "You must be logged");
     return res.redirect("/login");
   }
-  next(); 
+  next();
 };
 module.exports.saveRedirectUrl = (req, res, next) => {
   if (req.session.redirectUrl) {
@@ -61,40 +65,40 @@ module.exports.isreviewAuthor = async (req, res, next) => {
   next();
 };
 module.exports.isReviewAll = async (req, res, next) => {
-	try {
-		let { id } = req.params;
-		let review = await ReviewModel.findOne({ author: id });
-		if (!review) {
-			req.flash("error", "You don't have any reviews...");
-			return res.redirect(`/profile`);
-		}
-		if (!review.author.equals(res.locals.currUser._id)) {
-			req.flash("error", "You are not the author of this review...");
-			return res.redirect(`/listings`);
-		}
-		next();
-	} catch {
-		next(new ExpressError(400, "This Review Page is not valid..."));
-	}
+  try {
+    let { id } = req.params;
+    let review = await ReviewModel.findOne({ author: id });
+    if (!review) {
+      req.flash("error", "You don't have any reviews...");
+      return res.redirect(`/profile`);
+    }
+    if (!review.author.equals(res.locals.currUser._id)) {
+      req.flash("error", "You are not the author of this review...");
+      return res.redirect(`/listings`);
+    }
+    next();
+  } catch {
+    next(new ExpressError(400, "This Review Page is not valid..."));
+  }
 };
 module.exports.isOwnerAll = async (req, res, next) => {
-	try { 
-		let { id } = req.params;
-		console.log(id);
-		let listing = await ListingModel.findOne({ owner: id });
-		console.log(listing);
-		if (!listing) {
-			req.flash("error", "You don't have any listings...");
-			return res.redirect(`/profile`);
-		}
-		if (!listing.owner.equals(res.locals.currUser._id)) {
-			req.flash("error", "You are not the owner of this listing...");
-			return res.redirect(`/listings`);
-		}
-		next();
-	} catch (err) {
-		next(new ExpressError(400, "This Listing Page is not valid..."));
-	}
+  try {
+    let { id } = req.params;
+    console.log(id);
+    let listing = await ListingModel.findOne({ owner: id });
+    console.log(listing);
+    if (!listing) {
+      req.flash("error", "You don't have any listings...");
+      return res.redirect(`/profile`);
+    }
+    if (!listing.owner.equals(res.locals.currUser._id)) {
+      req.flash("error", "You are not the owner of this listing...");
+      return res.redirect(`/listings`);
+    }
+    next();
+  } catch (err) {
+    next(new ExpressError(400, "This Listing Page is not valid..."));
+  }
 };
 module.exports.isAccountOwner = async (req, res, next) => {
   let { id } = req.params;
