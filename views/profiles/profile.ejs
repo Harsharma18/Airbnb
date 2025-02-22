@@ -1,0 +1,192 @@
+<% layout("/layouts/boilerplate") %>
+<link href="/css/index.css" rel="stylesheet">
+<link href="/css/profile.css" rel="stylesheet">
+
+<div class="container my-5">
+    <div class="d-flex align-items-center justify-content-between p-4 rounded shadow-lg profile-container flex-wrap">
+        
+        <!-- Left: Profile Image -->
+        <div class="d-flex flex-column align-items-center">
+            <div class="profile-img-container position-relative">
+                <% if (user.image && user.image.url) { %>
+                    <img src="<%= user.image.url %>" id="imagePreview" class="profile-img">
+                <% } else { %>
+                    <img id="imagePreview" src="/icons/userpreview.png" class="profile-img">
+                <% } %>
+                
+                <!-- Floating action buttons (Camera & Delete) -->
+                <div class="action-buttons">
+                    <a href="/change-image/<%= user._id %>" class="btn btn-sm btn-primary icon-btn">
+                        <i class="fas fa-camera"></i>
+                    </a>
+                    <% if (user.image && user.image.url) { %>
+                        <form action="/delete-image/<%= user._id %>?_method=DELETE" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger icon-btn">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center: User Info -->
+        <div class="user-info p-3">
+            <h1>Welcome, <%= user.username %>!</h1>
+            <h4>Email: <%= currUser.email.split("@")[0][0] %>xxxxx@<%= currUser.email.split("@")[1] %></h4>
+        </div>
+
+        <!-- Right: Actions -->
+        <div class="action-btns">
+            <a href="/profile/update/<%= user._id %>" class="btn update-btn">Update Account</a>
+            <form method="POST" action="/profile/delete/<%= user._id %>?_method=DELETE">
+                <button type="submit" class="btn delete-btn">Delete Account</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div class="d-flex justify-content-center my-4">
+    <div class="btn-group" role="group" aria-label="Toggle Sections">
+        <input type="radio" class="btn-check" name="toggleSection" id="showListings" checked>
+        <label class="btn btn-outline-primary px-4 py-2" for="showListings">Listings</label>
+
+        <input type="radio" class="btn-check" name="toggleSection" id="showReviews">
+        <label class="btn btn-outline-primary px-4 py-2" for="showReviews">Reviews</label>
+    </div>
+</div>
+
+
+    <!-- Listings Section -->
+    <div id="listingsSection">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <a href="/listings/new" class="btn btn-success px-2 py-2 fw-bold shadow-sm d-flex align-items-center">
+                <i class="fas fa-plus-circle me-2"></i> Create Listing
+            </a>
+            <form method="post" action="/profile/all-listings-delete/<%= user._id %>?_method=DELETE">
+                <button type="submit" class="btn btn-danger px-2 py-2 fw-bold shadow-sm d-flex align-items-center">
+                    <i class="fas fa-trash-alt me-2"></i> Delete All Listings
+                </button>
+            </form>
+        </div>
+        
+        <h2 class="text-center fw-bold mb-4">
+            <span class="d-block">Manage Your Listings with Ease</span>
+            <span class="text-primary d-block fs-4">Total Listings: <%= listingCount %></span>
+        </h2>
+        
+    <div class="row g-4">
+        <% if (allListings.length > 0) { %>
+            <% allListings.forEach(listing => { %>
+                <div class="col-xxl-3 col-lg-4 col-md-6 col-sm-12 mx-auto">
+                    <div class="card listing-card shadow-sm">
+                        <div class="card-img-container position-relative">
+                            <img src="<%= listing.image.url %>" class="card-img-top rounded-top position-absolute" alt="Listing Image">
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold"><%= listing.title %></h5>
+                            <p class="text-muted"><%= listing.location %>, <%= listing.country %></p>
+                            <p class="fw-semibold text-primary"><%= listing.price ? listing.price.toLocaleString("en-IN") : 'Price not available' %>/night</p>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="/listings/<%= listing._id %>" class="btn btn-info">View</a>
+                                <form method="post" action="/profile/listings/<%= listing._id %>?_method=DELETE">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p class="text-center text-muted">You have not created any listings yet.</p>
+        <% } %>
+    </div>
+</div>
+    <!-- Reviews Section -->
+    <div id="reviewsSection" class="hidden container mt-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 border-bottom pb-3">
+            <div class="text-center w-100">
+                <p class="text-secondary fst-italic mb-2">"Your feedback is the key to better experiences!"</p>
+                <div class="total-reviews-box bg-light py-2 px-3 rounded shadow-sm d-inline-block">
+                    <span class="text-dark fw-bold fs-5">Total Reviews: <%= reviewCount %></span>
+                    <span class="d-block text-muted fs-6 fst-italic">"Every review you share makes a difference!"</span>
+                </div>
+            </div>
+        
+            <form method="post" action="/profile/all-reviews-delete/<%= user._id %>?_method=DELETE" class="ms-auto">
+                <button type="submit" class="btn btn-danger px-4 py-2 fw-bold shadow-sm d-flex align-items-center">
+                    <i class="fas fa-trash-alt me-2"></i> Delete All Reviews
+                </button>
+            </form>
+        </div>
+        
+        
+        <% if (allReviews.length > 0) { %>
+            <div class="row">
+                <% allReviews.forEach(review => { %>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="card review-cards shadow-sm border-0 p-2 mb-2 rounded-3">
+                            <div class="review-card-body ">
+                                <!-- Reviewer Info -->
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <div class="d-flex align-items-center">
+                                        <img 
+                                            class="rounded-circle border shadow-sm" 
+                                            src="<%= user.image ? user.image.url : '/icons/user.png' %>" 
+                                            alt="<%= user.username %>'s Image" 
+                                            width="50" height="50">
+                                        <div class="review-author-details ms-2">
+                                            <strong class="review-author-name d-block">
+                                                <%= user.username %>
+                                            </strong>
+                                            <span class="review-date text-muted small">
+                                                <%= new Date(review.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                       <!-- View Listing Button -->
+                                <a href="/listings/<%= review.listingmodelid._id %>" class="btn btn-sm btn-outline-secondary rounded-circle">
+                                    <i class="fas fa-eye"></i> 
+                                </a>
+                                    <form method="post" action="/profile/review/<%= review.listingmodelid._id %>/<%= review._id %>?_method=DELETE">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger shadow-sm">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
+    
+                                <!-- Star Rating -->
+                                <div class="review-rating ms-3">
+                                    <span class="starability-result " data-rating="<%= review.rating %>"></span>
+                                  </div>
+                                      <!-- Review Comment -->
+                                <p class="review-comment  "><%= review.comment %></p>
+                             
+                            
+    
+                             
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p class="text-center text-muted mt-4">You haven’t written any reviews yet.</p>
+        <% } %>
+    </div>
+    
+
+<script>
+  document.getElementById('showListings').addEventListener('change', function () {
+      document.getElementById('listingsSection').classList.remove('hidden');
+      document.getElementById('reviewsSection').classList.add('hidden');
+  });
+
+  document.getElementById('showReviews').addEventListener('change', function () {
+      document.getElementById('listingsSection').classList.add('hidden');
+      document.getElementById('reviewsSection').classList.remove('hidden');
+  });
+    
+   
+</script>

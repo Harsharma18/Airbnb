@@ -1,0 +1,80 @@
+<link href="/css/navbar.css" rel="stylesheet">
+<nav class="navbar  navbar-light bg-light shadow sticky-top">
+  <div class="container-fluid">
+   
+    <a class="navbar-brand d-flex align-items-center" href="/listings">
+        <i class="fa-brands fa-airbnb"></i>
+      <span class="fw-bold icon-text">airbnb</span>
+    </a> 
+  
+
+    <!-- Search Bar (Desktop only) -->
+    <form class="d-flex mx-auto d-none d-lg-flex absolute" method="get" role="search" action="/listings/search">
+      <input class="form-control  me-2 position-relative search-input" name="query" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn  search-btn" type="submit">
+        <i class="fas fa-search"></i>
+      </button>
+    </form>
+
+   <!-- Hamburger Menu Button -->
+   <button class="navbar-toggler navcustom-toggler d-flex align-items-center" type="button" onclick="toggleNav()">
+    <% if(currUser && currUser.image && currUser.image.url) { %>
+        <div class="navprofile-container">
+            <img src="<%= currUser.image.url %>"  alt="Profile" class="navprofile-img">
+        </div>
+    <% } else { %>
+        <div class="navprofile-container">
+            <img src="/icons/userpreview.png" alt="Profile" class="navprofile-img"> <!-- Default Image -->
+        </div>
+    <% } %>
+    <span id="hamberger" class="navbar-toggler-icon"></span>
+    <i id="closeIcon" class="fa-solid fa-xmark d-none"></i>
+</button>
+
+
+  <div id="smallNav" class="d-none">
+    <div class="nav-item">
+      <i class="fa-solid fa-user nav-icon"></i>
+      <a class="nav-link" href="/profile">Profile</a>
+    </div>
+    <%if(!currUser){%>
+    <div class="nav-item">
+      <i class="fa-solid fa-user-plus nav-icon"></i>
+      <a class="nav-link" href="/signup">Signup</a>
+    </div>
+    <div class="nav-item">
+      <i class="fa-solid fa-sign-in-alt nav-icon"></i>
+      <a class="nav-link" href="/login">LogIn</a>
+    </div>
+    <%}%>
+    <%if(currUser){%>
+    <div class="nav-item">
+      <i class="fa-solid fa-sign-out-alt nav-icon"></i>
+      <a class="nav-link" href="/logout">Logout</a>
+    </div>
+    <%}%>
+    <div class="nav-item">
+      <i class="fa-solid fa-home nav-icon"></i>
+      <a class="nav-link" href="/listings/new">Airbnb your home</a>
+    </div>
+  </div>
+  
+  
+
+
+<script src="/js/navbar.js"></script>
+
+
+
+  <!-- Search Bar (Mobile only) -->
+  <div class="container-fluid mt-3 d-lg-none">
+    <form class="d-flex" role="search" action="/listings/search" method="get">
+      <input class="form-control me-2" name="query"  type="search" placeholder="Search" aria-label="Search">
+      <button class="btn  search-btn" type="submit">
+         <!-- Bootstrap Search Icon -->
+         <i class="fas fa-search"></i>
+
+      </button>
+    </form>
+  </div>
+</nav>

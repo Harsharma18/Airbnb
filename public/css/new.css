@@ -1,0 +1,56 @@
+textarea {
+    resize: none; /* Disable manual resizing */
+    overflow-y: auto; /* Show scrollbar when content exceeds the height */
+    min-height: 100px; /* Adjust as needed */
+    max-height: 300px; /* Optional: set a maximum height */
+    width: 100%; /* Ensure it takes up the full width of its container */
+}
+textarea::-webkit-scrollbar{
+    display: none;
+}/* Image wi th box shadow */
+
+#imagePreview {
+    
+    height: 200px;
+    max-width: 300px;
+    object-fit: cover;
+    border-radius: 10px; 
+}
+
+
+/* select option */
+#category {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-size: .95rem;
+    overflow: scroll 
+}
+
+/* Styling for the select options to look like buttons */
+#category option {
+    background-color: #ffffff;
+    padding: 12px;
+    margin: 4px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    color: #333; 
+}
+
+/* Hover effect for options */
+#category option:hover {
+    background-color: #46677c; 
+    color: white;
+}
+
+/* For selected options, make them look highlighted */
+#category option:checked {
+    background-color: #66b266; 
+    color: white;
+}
+
+#category::-webkit-scrollbar {
+    display: none;
+}

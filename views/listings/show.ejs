@@ -1,0 +1,133 @@
+<% layout("/layouts/boilerplate.ejs") -%>
+<script>
+    const mapToken = "<%= process.env.MAP_TOKEN %>";
+    const listingcoord = JSON.parse(`<%- JSON.stringify(showlisting) %>`);
+    console.log(listingcoord);
+    //JSON.parse(JSON.stringify(showlisting.geodata.coordinates)) give  [11.255576, 43.769871] 0>11.255576 1>43.769871
+    //not work if we write this JSON.stringify(showlisting.geodata.coordinates) %> only strify because it return only string like this [11.255576,43.769871] so for array we parse in stringfy and 
+    //without strigify and parse it give only coordinate   showlisting.geodata.coordinates  like this 11.255576,43.769871
+    const coordinate = `<%- JSON.stringify(showlisting.geodata.coordinates) %>`;
+    console.log(coordinate);
+    const coord =" <%= showlisting.geodata.coordinates %>";
+    console.log(coord);
+</script>
+<link href="/css/show.css" rel="stylesheet">
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center">
+                <h3 class="fw-bold   mb-4"><%= showlisting.title %></h3>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-12">
+                <div class="card shadow-lg border-0 ">
+                   <div class="show-card mt-0"> <img 
+                    src="<%= showlisting.image.url %>" 
+                    class="card-img-top show-img rounded-top" 
+                    alt="listing_image"
+                /></div>
+                   
+                    <div class="card-body p-4">
+                        <p class="card-text"><strong>Owned by : </strong> @<%=showlisting.owner.username%></p>
+ 
+                        <p class="card-text description"><strong>Description:</strong> <%= showlisting.description %></p>
+                        <p class="card-text"><strong>Price:</strong> &#8377;<%= showlisting.price.toLocaleString("en-In") %><b>/</b>night</p>
+                        <p class="card-text">
+                            <strong>Country:</strong> <%= showlisting.location %>, <%= showlisting.country %>
+                            <i class="fa-solid fa-location-dot text-danger ms-2" style="font-size: 1.25rem;"></i>
+                        </p>
+                        <p class="card-text">
+                            <b>Category :</b> 
+                            <%= showlisting.category && showlisting.category.length > 0 ? showlisting.category.slice(",").join(",") : "No category added yet." %>
+                          </p>
+                                              
+                    
+                </div>
+                    </div>
+                    <%if( currUser && currUser._id.equals(showlisting.owner._id)){%>
+                    <div class="d-flex justify-content-start mt-3">
+                        <form method="get" action="/listings/<%= showlisting._id %>/edit">
+                            <button type="submit" class="btn btn-edit  btn-lg me-2">Edit</button>
+                        </form>
+                        <form method="post" action="/listings/<%= showlisting._id %>?_method=DELETE">
+                            <button type="submit" class="btn btn-delete   btn-lg">Delete</button>
+                        </form>
+                    </div>
+                    <%}%>
+                    <div class="mb-3 mt-4 ">
+                        <%if(currUser){%>
+                      
+                        <form method="post" action="/listings/<%= showlisting._id %>/reviews" class="needs-validation" novalidate>
+                            <fieldset class="starability-slot starability-coinFlip starability-heartbeat">
+                           <p class="card-text"><b>Leave a Review &nbsp;<i class="fa-regular fa-pen-to-square"></i></b></p>    
+                                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                <label for="first-rate1" title="Terrible"></label>
+                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                <label for="first-rate2" title="Not good"></label>
+                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                <label for="first-rate3" title="Average"></label>
+                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                <label for="first-rate4" title="Very good"></label>
+                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                <label for="first-rate5" title="Amazing"></label>
+                              </fieldset>
+                            <label class="form-label mt-3" for="comment">Comment</label>
+                            <textarea class="form-control mb-3" name="review[comment]" id="comment" cols="30" rows="3" required></textarea>
+                            <div class="invalid-feedback">Please add some comments for review</div>
+                            <button type="submit" class="btn btn-success mb-3 ">Submit</button>
+                        </form>
+                        <%}%>
+                    </div>
+                    <% if(showlisting.reviews.length > 0 ){ %>
+                        <p><b>All Reviews  <i class="fa-solid fa-star"></i></b></p>
+                    <%}%>
+                    <% for (const review of showlisting.reviews) { %>
+                        <div class="review-entry mt-2 mb-2 pb-2 border-bottom">
+                          
+                          <!-- Reviewer Info and Delete Button -->
+                            <div class="d-flex align-items-center">
+                              <img 
+                                class="review-author-image" 
+                                src="<%= review.author.image ? review.author.image.url : '/icons/user.png' %>" 
+                                alt="<%= review.author.username %>'s Image">
+                              <div class="review-author-details ml-3">
+                                <strong class="review-author-name"><%= review.author.username %></strong>
+                                <span class="review-date text-muted d-block">
+                                  <%= new Date(review.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) %>
+                                </span>
+                              </div>
+                            </div>
+                      
+                            <!-- Delete Button (Top Right) -->
+                            <form method="post" action="/listings/<%=showlisting._id%>/reviews/<%=review._id%>?_method=DELETE" class="delete-form">
+                              <button class="btn btn-sm delete-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </form>
+                      
+                          <!-- Star Rating (Small & Black) -->
+                          <div class="review-rating">
+                            <span class="starability-result " data-rating="<%= review.rating %>"></span>
+                          </div>
+                      
+                          <!-- Review Comment (Scrollable but Hidden Scrollbar) -->
+                          <p class="review-comment"><%= review.comment %></p>
+                      
+                        </div>
+                      <% } %>
+                      
+                      
+                    <div class="map-container">
+                        <h3>Where You'll be &nbsp;<i class="fa-solid fa-location-crosshairs"></i></h3>
+                        <div class="map" id="map">
+                            <div class="github-link"><a href="https://github.com/Harsharma18" target="_blank">AD GitHub</a></div>
+                        </div>
+                    </div>
+                    
+                    
+                    </div>
+                   
+                </div>
+            </div> 
+        </div>
+    </div>
+    <script src="/js/map.js"></script>

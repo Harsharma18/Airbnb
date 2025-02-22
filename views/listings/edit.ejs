@@ -1,0 +1,206 @@
+
+<% layout("/layouts/boilerplate") %>
+ <link href="/css/edit.css" rel="stylesheet">
+<div class="row mt-3 ">
+    <div class="col-12 col-md-6 mx-auto">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="text-center mb-4">Edit Your Listing</h3>
+                <form method="post" novalidate class="needs-validation" enctype="multipart/form-data" action="/listings/<%= editListing._id %>?_method=PUT" >
+                   
+                    <div class="mb-3">
+                        <label for="title" class="form-label"><strong>Title</strong></label>
+                        <input name="listing[title]" type="text" class="form-control" value="<%= editListing.title %>" required>
+                        <div class="valid-feedback">Looking good 😀</div>
+                        <div class="invalid-feedback">Please Enter title</div>
+
+                    </div>
+
+                    <!-- Description Input -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label"><strong>Description</strong></label>
+                        <textarea name="listing[description]" class="form-control" required><%= editListing.description %></textarea>
+                        <div class="invalid-feedback">Please Enter Short Description</div>
+                    </div>
+
+                  <!-- original image  -->
+                    <div class="mb-3">
+                        <p class="card-title"><strong>Original Image</strong></p>
+                        <div class="image-box shadow-lg">
+                            <img class="img-fluid image-preview" src="<%= originalImageUrl %>" alt="Original Image">
+                        </div>
+                       </div>
+                       <div class="mb-3">
+                        <label for="image" class="form-label"><strong>Upload Listing Image</strong></label>
+                        <input id="inputfile" name="listing[image]" type="file" class="form-control"  />
+                        <div id="error-message" class="text-danger mt-2"></div>
+                      
+                         <!-- Image Upload -->
+                  
+                    <div class="mb-3">
+                        <p class="card-title"><b>Update Image Preview</b></p>
+                        <div class="image-box shadow-lg">
+                            <img class="img-fluid" id="imagePreview" src="/icons/imgpreview.png" alt="Preview">
+                        </div>
+                       </div>
+                   </div>
+
+                     <!-- Selected Categories Display -->
+                     <div class="mb-3">
+                        <label for="category-added" class="form-label"><b>Previous Categories</b></label>
+                        <div class="category-box">
+                            <% if (editListing.category.length > 0) { %>
+                                <% editListing.category.forEach(categ => { %>
+                                    <div class="d-flex align-items-center mb-2 flex-wrap">
+                                        <!-- Category Badge -->
+                                        <span class="bg-info text-white p-1 px-2 rounded-pill d-flex justify-content-between align-items-center flex-grow-1">
+                                             <%= categ %> 
+                                            <!-- Remove Icon -->
+                                            <a href="/listings/<%= editListing._id %>/remove-category/<%= categ %>"
+                                               class="btn btn-sm btn-outline-light ms-2 rounded-circle" 
+                                              >
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                <% }) %>
+                                   <!-- Button to remove all categories -->
+                                   <a href="/listings/<%= editListing._id %>/remove-all-categories" 
+                                    class="btn btn-outline-danger btn-sm px-4 py-2 mt-2 rounded-3 shadow-sm"
+                                    style="font-weight: bold; transition: background-color 0.3s ease, transform 0.2s ease;"
+                                    >
+                                    <i class="fas fa-trash-alt"></i> Remove All Categories
+                                 </a>
+                                 
+                            <% } else { %>
+                                <p class="text-muted">No categories added yet.</p>
+                            <% } %>
+                        </div>
+                    </div>
+                    
+                    
+
+
+<div class="mb-3">
+    <label for="category" class="form-label "><b>Choose Category</b></label>
+    <div class="category-choose d-flex flex-wrap align-items-center gap-3 p-3 border rounded bg-light shadow-sm">
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-primary text-white px-3 py-2 rounded-pill">Single Choose</span>
+            <span class="text-secondary fw-semibold">Click</span>
+        </div>
+        <div class="d-none d-md-block vr"></div> <!-- Vertical separator for larger screens -->
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge bg-success text-white px-3 py-2 rounded-pill">Multiple Choose</span>
+            <span class="text-secondary fw-semibold">Hold <kbd class="bg-dark text-white px-2 py-1 rounded">Ctrl</kbd> + Click</span>
+        </div>
+    </div>
+</div>
+<div class="mb-3">
+    <label for="category" class="form-label fw-bold fs-5 text-dark">Choose Category</label>
+    <select id="category" size="2" name="listing[category][]" 
+        class="form-select border border-light rounded-3 mb-3 p-2 shadow-sm" 
+        style="font-size: .95rem; background-color: #f8f9fa;" multiple>
+        <option value="Beachfront" class="btn-option">Beachfront</option>
+        <option value="Cabins" class="btn-option">Cabins</option>
+        <option value="Omg" class="btn-option">OMG</option>
+        <option value="Lake" class="btn-option">Lake</option>
+        <option value="Design" class="btn-option">Design</option>
+        <option value="Amazing Pools" class="btn-option">Amazing pools</option>
+        <option value="Farms" class="btn-option">Farms</option>
+        <option value="Amazing Views" class="btn-option">Amazing views</option>
+        <option value="Rooms" class="btn-option">Rooms</option>
+        <option value="Lakefront" class="btn-option">Lakefront</option>
+        <option value="Tiny Homes" class="btn-option">Tiny homes</option>
+        <option value="Countryside" class="btn-option">Countryside</option>
+        <option value="Treehouse" class="btn-option">Treehouse</option>
+        <option value="Trending" class="btn-option">Trending</option>
+        <option value="Tropical" class="btn-option">Tropical</option>
+        <option value="National Parks" class="btn-option">National parks</option>
+        <option value="Casties" class="btn-option">Casties</option>
+        <option value="Camping" class="btn-option">Camping</option>
+        <option value="Top Of The World" class="btn-option">Top of the world</option>
+        <option value="Luxe" class="btn-option">Luxe</option>
+        <option value="Iconic Cities" class="btn-option">Iconic cities</option>
+        <option value="Earth Homes" class="btn-option">Earth homes</option>
+    </select>
+</div>
+
+
+
+                    <!-- Price and Location (Horizontal Layout) -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="price" class="form-label"><strong>Price</strong></label>
+                                <input name="listing[price]" type="text" class="form-control" required value="<%= editListing.price %>">
+                                <div class="invalid-feedback">Please Enter Price</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="location" class="form-label"><strong>Location</strong></label>
+                                <input name="listing[location]" type="text" class="form-control" required value="<%= editListing.location %>">
+                                <div class="invalid-feedback">Please Enter Location</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Country Input -->
+                    <div class="mb-3">
+                        <label for="country" class="form-label"><strong>Country</strong></label>
+                        <input name="listing[country]" placeholder="India" type="text" required class="form-control" value="<%= editListing.country %>">
+                        <div class="invalid-feedback">Please Enter Country name</div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-dark mb-3 ">Update Listing</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</div> 
+
+<!-- <script>
+    const imagePreview = document.getElementById('imagePreview');
+const inputFile = document.getElementById('inputfile');
+
+inputFile.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const objectURL = URL.createObjectURL(file);
+        imagePreview.src = objectURL;
+
+        // Revoke the object URL after the image has loaded
+        imagePreview.onload = () => {
+            URL.revokeObjectURL(objectURL);
+        };
+    }
+});
+
+</script> -->
+<script>
+    document.getElementById('inputfile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const errorMessage = document.getElementById('error-message');
+        const imagePreview = document.getElementById('imagePreview');
+
+        if (file) {
+            if (file.size > 200 * 1024) { // 200KB
+                errorMessage.textContent = 'File size exceeds 200KB. Please upload a smaller image.';
+                imagePreview.src = '/icons/imgpreview.png'; // Reset to default preview
+                e.target.value = ''; // Clear the input
+            } else {
+                errorMessage.textContent = '';
+                const objectURL = URL.createObjectURL(file);
+                imagePreview.src = objectURL;
+
+                imagePreview.onload = () => {
+                    URL.revokeObjectURL(objectURL);
+                };
+            }
+        }
+    });
+</script>

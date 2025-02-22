@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+body {
+    background-color: #f8f9fa;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+/* Importing Cinzel from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+
+h3 {
+    color: #333;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  
+    font-size: 24px;
+    margin: 10px 0;
+    font-family: 'Cinzel', serif;
+}
+
+
+.description {
+    max-height: 150px; 
+    overflow-y: auto; 
+   text-align: justify;
+   line-height: 1.6;
+    -webkit-line-clamp: 4; 
+    
+}
+
+.description::-webkit-scrollbar {
+    display: none;
+    width: 8px; 
+}
+
+
+.show-card {
+    overflow: hidden; 
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+.show-img {
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+    transition: transform 0.3s ease-in-out;
+  
+}
+.show-img:hover {
+    transform: scale(1.1);
+    
+}
+/* Edit Button Styles */
+.btn-edit {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.6rem 1.4rem;
+    border: none;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    color: white;
+    background-color: #4CAF50; 
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.btn-edit:hover {
+    background-color: #45a049;
+    color: white;
+    font-weight: bold;
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); 
+}
+
+/* Delete Button Styles */
+.btn-delete {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.6rem 1.4rem;
+    border: none;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    color: white;
+    background-color: #FF5722; 
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.btn-delete:hover {
+    background-color: #E64A19; 
+    color: white;
+    font-weight: bold;
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); 
+}
+.review-entry {
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ddd; 
+    position: relative;
+  }
+  
+  .review-rating span {
+    display: inline-block;
+    margin-left: 1rem;
+    transform: scale(0.7); 
+     
+  }
+  
+  
+  /* Reviewer Image */
+  .review-author-image {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    object-fit: cover;
+    background-position: center ; 
+    
+  }
+  
+  /* Reviewer Name & Date */
+  .review-author-name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #222;
+  }
+  
+  .review-date {
+    font-size: 0.85rem;
+    color: #777;
+  }
+  
+  
+  .review-comment {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6;
+    max-height: 100px; 
+    overflow-y: auto;
+    text-align: justify;
+   
+  }
+  
+  .review-comment::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
+  
+  .delete-btn {
+    background: transparent;
+    color: #ff5a5f;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+  }
+  
+  .delete-btn:hover {
+    transform: scale(1.1);
+    color: #d43f3a;
+  }
+  
+  
+  
+#map {
+    height: 500px;
+    width: 100%;
+    border-radius: 1rem;
+    border: 1px solid rgba(0, 128, 0, 0.428);
+    position: relative;
+}
+.github-link{
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 8px 8px;
+    position: absolute;
+    z-index: 1000;
+}
+.github-link a {
+    text-decoration: none;
+    color:white;
+    font-weight: bold;
+}
+@media (max-width: 768px) {
+    #map {
+        height: 400px;
+    }
+
+    h3 {
+        font-size: 1.5rem; 
+    }
+
+    .fa-location-crosshairs {
+        font-size: 1.2rem; 
+    }
+}
+
+
+.d-flex {
+    gap: 7px;
+}
+textarea {
+    resize: none;
+    overflow-y: auto; 
+    min-height: 100px; 
+    max-height: 300px;
+    width: 100%; 
+}
+textarea::-webkit-scrollbar{
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .show-card {
+        margin: 0.5rem 0;
+    }
+
+    .show-img {
+        height: 250px;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 0.4rem 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-body p {
+        margin-bottom: 0.5rem; 
+    } 
+    .show-card {
+        margin: 0.5rem 0;
+    }
+    .show-img {
+        height: 250px;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+} 

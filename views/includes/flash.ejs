@@ -1,0 +1,15 @@
+<link href="/css/flash.css" rel="stylesheet">
+<% if(success && success.length){ %>
+    <div class="alert alert-success alert-dismissible text-center offset-2 col-md-6 anima" role="alert">
+       <%= success %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+
+<!-- Error Alert -->
+<% if(error && error.length){ %>
+    <div class="alert alert-danger alert-dismissible text-center offset-2 col-md-6 anima" role="alert">
+      <%= error %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
