@@ -100,9 +100,7 @@ app.use("/listings", listingroutes);
 app.use("/listings/:id/reviews", reviewroutes);
 app.use("/", userroutes);
 
-app.get("/", (req, res) => {
-  res.send("hlo i am a Root Path");
-});
+
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("404", "Page Not found"));
