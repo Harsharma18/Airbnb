@@ -100,6 +100,9 @@ app.use("/listings", listingroutes);
 app.use("/listings/:id/reviews", reviewroutes);
 app.use("/", userroutes);
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
 
 
 app.all("*", (req, res, next) => {
